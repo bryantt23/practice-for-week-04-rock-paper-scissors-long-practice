@@ -1,5 +1,5 @@
 # Long Practice: Rock, Paper, Scissors Refactor
-
+https://my.appacademy.io/lessons/user-input/0e404b7c/practices/guessing-game-project/d236f9b6
 In this practice, you will be refactoring code to follow the Single
 Responsibility Principle and the DRY Principle. You will also practice reading
 test specs.
