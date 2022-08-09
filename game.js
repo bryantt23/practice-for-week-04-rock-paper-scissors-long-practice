@@ -35,9 +35,24 @@ function printHelp() {
 
 function getWinner(move1, move2) {
   // Your code here
+  if (move1 === move2) {
+    return 0;
+  } else if (
+    (move1 === 's' && move2 === 'p') ||
+    (move1 === 'p' && move2 === 'r') ||
+    (move1 === 'r' && move2 === 's')
+  ) {
+    return 1;
+  } else {
+    return -1;
+  }
 }
 
 function getCPUMove() {
+  const validMoveKeys = Object.keys(VALID_MOVES);
+  const randomIndex = Math.floor(Math.random() * validMoveKeys.length);
+  const cpu = validMoveKeys[randomIndex];
+  return cpu;
   // Your code here
 }
 
@@ -57,17 +72,19 @@ function promptInput(rl) {
       rl.close();
       return;
     } else if (VALID_MOVES[cmd]) {
-      const validMoveKeys = Object.keys(VALID_MOVES);
-      const randomIndex = Math.floor(Math.random() * validMoveKeys.length);
-      const cpu = validMoveKeys[randomIndex];
+      const cpu = getCPUMove();
+
+      processMove(cmd, cpu);
 
       console.log(`You pick ${cmd}, computer picks ${cpu}.`);
 
-      if (cmd === cpu) {
+      const winner = getWinner(cmd, cpu);
+
+      if (winner === 0) {
         // tie
         console.log('You tie.\n');
         ties++;
-      } else if (VALID_MOVES[cmd].winsAgainst === cpu) {
+      } else if (winner === 1) {
         // win
         console.log('You win!\n');
         wins++;
@@ -78,11 +95,7 @@ function promptInput(rl) {
       }
     } else {
       console.log('\nInvalid command.\n');
-      console.log("  Type 'r' for Rock");
-      console.log("  Type 'p' for Paper");
-      console.log("  Type 's' for Scissors");
-      console.log("  Type 'q' to quit");
-      console.log("  Type 'h' for a list of valid commands\n");
+      printHelp();
     }
 
     promptInput(rl);
@@ -96,12 +109,7 @@ function initializeGame() {
     output: process.stdout
   });
   console.log('Welcome to Rock/Paper/Scissors\n');
-  console.log("  Type 'r' for Rock");
-  console.log("  Type 'p' for Paper");
-  console.log("  Type 's' for Scissors");
-  console.log("  Type 'q' to quit");
-  console.log("  Type 'h' for a list of valid commands\n");
-
+  printHelp();
   promptInput(rl);
 }
 
