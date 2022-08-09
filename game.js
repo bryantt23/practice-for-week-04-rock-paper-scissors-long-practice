@@ -58,6 +58,23 @@ function getCPUMove() {
 
 function processMove(cmd, cpu) {
   // Your code here
+  console.log(`You pick ${cmd}, computer picks ${cpu}.`);
+
+  const winner = getWinner(cmd, cpu);
+
+  if (winner === 0) {
+    // tie
+    console.log('You tie.\n');
+    ties++;
+  } else if (winner === 1) {
+    // win
+    console.log('You win!\n');
+    wins++;
+  } else {
+    // loss
+    console.log('You lose...\n');
+    losses++;
+  }
 }
 
 /******************************* MAIN FUNCTION *******************************/
@@ -75,24 +92,6 @@ function promptInput(rl) {
       const cpu = getCPUMove();
 
       processMove(cmd, cpu);
-
-      console.log(`You pick ${cmd}, computer picks ${cpu}.`);
-
-      const winner = getWinner(cmd, cpu);
-
-      if (winner === 0) {
-        // tie
-        console.log('You tie.\n');
-        ties++;
-      } else if (winner === 1) {
-        // win
-        console.log('You win!\n');
-        wins++;
-      } else {
-        // loss
-        console.log('You lose...\n');
-        losses++;
-      }
     } else {
       console.log('\nInvalid command.\n');
       printHelp();
